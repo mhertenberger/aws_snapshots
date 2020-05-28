@@ -86,10 +86,19 @@ def create_snapshots(project):
     instances = filter_instances(project)
 
     for i in instances:
+        print("Stopping instance {0} in preparation for snapshot creation...".format(i.id))
+        i.stop()
+        i.wait_until_stopped()
+
         for v in i.volumes.all():
             print("Creating snapshot of {0}".format(v.id))
             v.create_snapshot(Description="Created by snapshot script")
 
+        print("Restarting {0} after snapshot creation...".format(i.id))
+        i.start()
+        i.wait_until_running()
+
+    print("Snapshots have been created.")
     return
 
 
