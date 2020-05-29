@@ -15,6 +15,6 @@ setup(
     ],
     entry_points = """
         [console_scripts]
-        snapshot = snapshot.snapshot:click
+        snapshot = snapshot.snapshot:cli
     """,
 )
